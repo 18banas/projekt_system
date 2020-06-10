@@ -26,7 +26,7 @@ class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInte
             $event->setTitle($this->faker->sentence);
             $event->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $event->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
-            $event->setCategory($this->getRandomReference('categorys'));
+            $event->setCategory($this->getRandomReference('categories'));
 
             return $event;
         });
