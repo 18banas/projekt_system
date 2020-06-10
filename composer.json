@@ -1,0 +1,14 @@
+{
+    "require": {
+        "sensiolabs/security-checker": "^6.0",
+        "symfony/orm-pack": "^1.0",
+        "twig/twig": "^3.0",
+        "symfony/asset": "^5.0",
+        "symfony/translation": "^5.0"
+    },
+    "require-dev": {
+        "symfony/maker-bundle": "^1.17",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "symfony/profiler-pack": "^1.0"
+    }
+}
