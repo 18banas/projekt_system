@@ -1,23 +1,20 @@
 <?php
 /**
- * Event type.
+ * Contact type.
  */
 
 namespace App\Form;
 
-use App\Entity\Event;
-use Doctrine\DBAL\Types\DateTimeType;
+use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class EventType.
+ * Class ContactType.
  */
-class EventType extends AbstractType
+class ContactType extends AbstractType
 {
     /**
      * Builds the form.
@@ -33,28 +30,35 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
-            'title',
+            'name',
             TextType::class,
             [
-                'label' => 'label_title',
+                'label' => 'label_name',
                 'required' => true,
-                'attr' => ['max_length' => 255],
+                'attr' => ['max_length' => 45],
             ]
         );
         $builder->add(
-            'datetime',
-            DateType::class,
+            'surname',
+            TextType::class,
             [
-                'label' => 'label_datetime',
+                'label' => 'label_surname',
                 'required' => true,
+                'attr' => ['max_length' => 45],
             ]
         );
         $builder->add(
-            'note',
-            TextareaType::class,
+            'phonenum',
+            TextType::class,
             [
-                'label' => 'label_note',
-                'attr' => ['max_length' => 1024],
+                'label' => 'label_phone_num',
+            ]
+        );
+        $builder->add(
+            'email',
+            TextType::class,
+            [
+                'label' => 'label_email',
             ]
         );
     }
@@ -66,7 +70,7 @@ class EventType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Event::class]);
+        $resolver->setDefaults(['data_class' => Contact::class]);
     }
 
     /**
@@ -79,6 +83,6 @@ class EventType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'event';
+        return 'contact';
     }
 }

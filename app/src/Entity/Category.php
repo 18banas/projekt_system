@@ -100,25 +100,6 @@ class Category
     private $code;
 
     /**
-     * Events.
-     *
-     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Event[] $events Events
-     *
-     * @ORM\OneToMany(
-     *     targetEntity="App\Entity\Event",
-     *     mappedBy="category",
-     * )
-     *
-     * @Assert\Type(type="Doctrine\Common\Collections\ArrayCollection")
-     */
-    private $events;
-
-    public function __construct()
-    {
-        $this->events = new ArrayCollection();
-    }
-
-    /**
      * Getter for Id.
      *
      * @return int|null Result
@@ -189,37 +170,6 @@ class Category
     }
 
     /**
-     * @return Collection|Event[]
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->contains($event)) {
-            $this->events->removeElement($event);
-            // set the owning side to null (unless already changed)
-            if ($event->getCategory() === $this) {
-                $event->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string|null
      */
     public function getCode(): ?string
@@ -227,10 +177,8 @@ class Category
         return $this->code;
     }
 
-    public function setCode(string $code): self
+    public function setCode(string $code): void
     {
         $this->code = $code;
-
-        return $this;
     }
 }

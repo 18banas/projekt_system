@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title_category_list'|trans }}
+    {{ 'title_contact_list'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_category_list'|trans }}</h1>
+    <h1>{{ 'title_contact_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
 
         <div class="navigation text-center">
@@ -15,23 +15,26 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'category.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'contact.name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_surname'|trans, 'contact.surname') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_email'|trans, 'contact.email') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_phone_num'|trans, 'contact.phonenum') }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for category in pagination.items %}
+            {% for contact in pagination.items %}
                 <tr>
-                    <td>{{ category.title }}</td>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.surname }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phonenum }}</td>
                     <td>
-                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_view'|trans }}">
-                            {{ 'action_view'|trans }}
+                        <a href="{{ url('contact_delete', {id: contact.id}) }}" title="{{ 'action_delete'|trans }}">
+                            {{ 'action_delete'|trans }}
                         </a>
-                        <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action_edit'|trans }}">
+                        <a href="{{ url('contact_edit', {id: contact.id}) }}" title="{{ 'action_edit'|trans }}">
                             {{ 'action_edit'|trans }}
-                        </a>
-                        <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action_delete'|trans }}">
-                                {{ 'action_delete'|trans }}
                         </a>
                     </td>
                 </tr>
@@ -42,7 +45,6 @@
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
-
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
             type: 'warning',
@@ -50,8 +52,8 @@
         } %}
     {% endif %}
     <p>
-        <a href="{{ url('category_create') }}" title="{{ 'action_create_category'|trans }}">
-            {{ 'action_create_category'|trans }}
+        <a href="{{ url('contact_create')}}" title="{{ 'action_create_contact'|trans }}">
+            {{ 'action_create_contact'|trans }}
         </a><br>
         <a href="{{ url('event_index') }}" title="{{ 'action_back_to_event_list'|trans }}">
             {{ 'action_back_to_event_list'|trans }}

@@ -40,14 +40,8 @@ class CategoryController extends AbstractController
      *     name="category_delete",
      * )
      */
-    public function delete(Request $request, Category $category, CategoryRepository $repository): Response
+    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if ($category->getEvents()->count()) {
-            $this->addFlash('warning', 'message_category_contains_tasks');
-
-            return $this->redirectToRoute('category_index');
-        }
-
         $form = $this->createForm(CategoryType::class, $category, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
@@ -56,8 +50,8 @@ class CategoryController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $repository->delete($category);
-            $this->addFlash('success', 'message_deleted_successfully');
+            $categoryRepository->delete($category);
+            $this->addFlash('success', 'message.deleted_successfully');
 
             return $this->redirectToRoute('category_index');
         }

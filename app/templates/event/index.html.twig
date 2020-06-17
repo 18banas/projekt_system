@@ -15,10 +15,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'event.id') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'event.createdAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'event.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'event.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_datetime'|trans, 'event.datetime') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_category'|trans, 'category.title') }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
@@ -26,10 +24,8 @@
             <tbody>
             {% for event in pagination.items %}
                 <tr>
-                    <td>{{ event.id }}</td>
-                    <td>{{ event.createdAt|format_date('long') }}</td>
-                    <td>{{ event.updatedAt|format_date('long') }}</td>
                     <td>{{ event.title }}</td>
+                    <td>{{ event.datetime|format_date('long') }}</td>
                     <td>{{ event.category.title }}</td>
                     <td>
                         <a href="{{ url('event_show', {id: event.id}) }}" title="{{ 'action_view'|trans }}">
@@ -63,6 +59,9 @@
         </a><br>
         <a href="{{ url('category_index') }}" title="{{ 'action_go_to_category_list'|trans }}">
             {{ 'action_go_to_category_list'|trans }}
+        </a><br>
+        <a href="{{ url('contact_index') }}" title="{{ 'action_go_to_contact_list'|trans }}">
+            {{ 'action_go_to_contact_list'|trans }}
         </a>
     </p>
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

@@ -134,6 +134,78 @@
                 <source>action_logout</source>
                 <target>Wyloguj się</target>
             </trans-unit>
+            <trans-unit id="label_datetime">
+                <source>label_datetime</source>
+                <target>Data</target>
+            </trans-unit>
+            <trans-unit id="label_note">
+                <source>label_note</source>
+                <target>Notatka</target>
+            </trans-unit>
+            <trans-unit id="title_contact_list">
+                <source>title_contact_list</source>
+                <target>Kontakty</target>
+            </trans-unit>
+            <trans-unit id="label_name">
+                <source>label_name</source>
+                <target>Imię</target>
+            </trans-unit>
+            <trans-unit id="label_surname">
+                <source>label_surname</source>
+                <target>Nazwisko</target>
+            </trans-unit>
+            <trans-unit id="label_email">
+                <source>label_email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="label_phone_num">
+                <source>label_phone_num</source>
+                <target>Numer telefonu</target>
+            </trans-unit>
+            <trans-unit id="action_create_contact">
+                <source>action_create_contact</source>
+                <target>Utwórz kontakt</target>
+            </trans-unit>
+            <trans-unit id="action_go_to_contact_list">
+                <source>action_go_to_contact_list</source>
+                <target>Lista kontaktów</target>
+            </trans-unit>
+            <trans-unit id="title_contact_delete">
+                <source>title_contact_delete</source>
+                <target>Usuwanie kontaktu</target>
+            </trans-unit>
+            <trans-unit id="title_contact_edit">
+                <source>title_contact_edit</source>
+                <target>Edycja kontaktu</target>
+            </trans-unit>
+            <trans-unit id="event_deleting_message">
+                <source>event_deleting_message</source>
+                <target>Czy na pewno chcesz usunąć to wydarzenie?</target>
+            </trans-unit>
+            <trans-unit id="title_contact_create">
+                <source>title_contact_create</source>
+                <target>Utwórz kontakt</target>
+            </trans-unit>
+            <trans-unit id="contact_deleting_message">
+                <source>contact_deleting_message</source>
+                <target>Czy na pewno chcesz usunąć ten kontakt?</target>
+            </trans-unit>
+            <trans-unit id="category_deleting_message">
+                <source>category_deleting_message</source>
+                <target>Czy na pewno chcesz usunąć tę kategorię?</target>
+            </trans-unit>
+            <trans-unit id="Year">
+                <source>Year</source>
+                <target>Rok</target>
+            </trans-unit>
+            <trans-unit id="Month">
+                <source>Month</source>
+                <target>Miesiąc</target>
+            </trans-unit>
+            <trans-unit id="Day">
+                <source>Day</source>
+                <target>Dzień</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

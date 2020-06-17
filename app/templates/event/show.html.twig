@@ -8,16 +8,16 @@
     <h1>{{ 'title_event_details'|trans({'%id%': event.id|default('')}) }}</h1>
     {% if event is defined and event|length %}
         <dl class="dl-horizontal">
-            <dt>{{ 'label_id'|trans }}</dt>
-            <dd>{{ event.id }}</dd>
-            <dt>{{ 'label_created_at'|trans }}</dt>
-            <dd>{{ event.createdAt|format_date('long') }}</dd>
-            <dt>{{ 'label_updated_at'|trans }}</dt>
-            <dd>{{ event.updatedAt|format_date('long') }}</dd>
-            <dt>{{ 'label_category'|trans }}</dt>
-            <dd>{{  event.category.title }}</dd>
             <dt>{{ 'label_title'|trans }}</dt>
             <dd>{{  event.title }}</dd>
+            <dt>{{ 'label_datetime'|trans }}</dt>
+            <dd>{{ event.datetime|format_date('long') }}</dd>
+            <dt>{{ 'label_category'|trans }}</dt>
+            <dd>{{  event.category.title }}</dd>
+            <dt>{{ 'label_note'|trans }}</dt>
+            <dd>{{  event.note }}</dd>
+            <dt>{{ 'label_created_at'|trans }}</dt>
+            <dd>{{ event.createdAt|format_date('long') }}</dd>
         </dl>
         <p>
             <a href="{{ url('event_index') }}" title="{{ 'action_back_to_list'|trans }}">

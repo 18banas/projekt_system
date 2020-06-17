@@ -60,10 +60,30 @@ class Event
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
+     * Date_time.
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $datetime;
+
+    /**
+     * Note.
+     *
+     * @var string
+     * @ORM\Column(
+     *     type="string",
+     *     length=1024,
+     *     nullable=true)
+     */
+    private $note;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class)
      */
     private $category;
+
 
     /**
      * Getter for Id.
@@ -133,6 +153,46 @@ class Event
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+    /**
+     * Getter for Date_time.
+     *
+     * @return \DateTimeInterface|null Date_time
+     */
+
+    public function getDatetime(): ?DateTimeInterface
+    {
+        return $this->datetime;
+    }
+
+    /**
+     * Setter for Date_time.
+     *
+     * @param \DateTimeInterface $datetime Date_time
+     */
+    public function setDatetime(DateTimeInterface $datetime): void
+    {
+        $this->datetime = $datetime;
+    }
+
+    /**
+     * Getter for Note.
+     *
+     * @return string|null Note
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * Setter for Note.
+     *
+     * @param string $note Note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
     }
 
     public function getCategory(): ?Category
