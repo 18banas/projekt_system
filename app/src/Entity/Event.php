@@ -80,9 +80,11 @@ class Event
     private $note;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class)
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
 
 
     /**
@@ -206,4 +208,5 @@ class Event
 
         return $this;
     }
+
 }

@@ -17,8 +17,6 @@
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'contact.name') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_surname'|trans, 'contact.surname') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label_email'|trans, 'contact.email') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'label_phone_num'|trans, 'contact.phonenum') }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
             </thead>
@@ -27,9 +25,10 @@
                 <tr>
                     <td>{{ contact.name }}</td>
                     <td>{{ contact.surname }}</td>
-                    <td>{{ contact.email }}</td>
-                    <td>{{ contact.phonenum }}</td>
                     <td>
+                        <a href="{{ url('contact_show', {id: contact.id}) }}" title="{{ 'action_view'|trans }}">
+                            {{ 'action_view'|trans }}
+                        </a>
                         <a href="{{ url('contact_delete', {id: contact.id}) }}" title="{{ 'action_delete'|trans }}">
                             {{ 'action_delete'|trans }}
                         </a>
