@@ -80,6 +80,18 @@ class Category
     private $title;
 
     /**
+     * Events.
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Event[] $event Events
+     *
+     * @ORM\OneToMany(
+     *     targetEntity=Event::class,
+     *     mappedBy="category"
+     * )
+     */
+    private $events;
+
+    /**
      * Code.
      *
      * @var string
@@ -100,10 +112,8 @@ class Category
     private $code;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="category")
+     * Category_event constructor.
      */
-    private $events;
-
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -180,26 +190,42 @@ class Category
     }
 
     /**
-     * @return string|null
+     * Getter for Code.
+     *
+     * @return string|null Code
      */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * Setter for Code.
+     *
+     * @param string $code Code
+     */
     public function setCode(string $code): void
     {
         $this->code = $code;
     }
 
     /**
-     * @return Collection|Event[]
+     * Getter for Events.
+     *
+     * @return Collection|Event[] Event
      */
     public function getEvents(): Collection
     {
         return $this->events;
     }
 
+    /**
+     * AddEvent action.
+     *
+     * @param Event $event
+     *
+     * @return $this
+     */
     public function addEvent(Event $event): self
     {
         if (!$this->events->contains($event)) {
@@ -210,6 +236,13 @@ class Category
         return $this;
     }
 
+    /**
+     * RemoveEvent action.
+     *
+     * @param Event $event
+     *
+     * @return $this
+     */
     public function removeEvent(Event $event): self
     {
         if ($this->events->contains($event)) {

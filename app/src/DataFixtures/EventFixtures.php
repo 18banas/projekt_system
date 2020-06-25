@@ -2,6 +2,7 @@
 /**
  * Event fixtures.
  */
+
 namespace App\DataFixtures;
 
 use App\Entity\Event;
@@ -11,7 +12,6 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Class EventFixtures.
  */
-
 class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**

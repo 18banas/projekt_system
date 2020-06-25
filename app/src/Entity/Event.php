@@ -1,14 +1,19 @@
 <?php
-/**
+/*
  * Event entity.
  */
+
 namespace App\Entity;
 
 use App\Repository\EventRepository;
-use Doctrine\ORM\Mapping as ORM;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
+ * Class Event.
+ *
  * @ORM\Entity(repositoryClass=EventRepository::class)
  * @ORM\Table(name="events")
  */
@@ -80,11 +85,27 @@ class Event
     private $note;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="events")
+     * Category.
+     *
+     * @var \App\Entity\Category Category
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity=Category::class,
+     *     inversedBy="events"
+     * )
+     *
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $category;
 
+    /**
+     * Event constructor.
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
 
     /**
@@ -156,12 +177,12 @@ class Event
     {
         $this->title = $title;
     }
+
     /**
      * Getter for Date_time.
      *
      * @return \DateTimeInterface|null Date_time
      */
-
     public function getDatetime(): ?DateTimeInterface
     {
         return $this->datetime;
@@ -197,16 +218,24 @@ class Event
         $this->note = $note;
     }
 
+    /**
+     * Getter for category.
+     *
+     * @return \App\Entity\Category|null Category
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    /**
+     * Setter for category.
+     *
+     * @param \App\Entity\Category|null $category Category
+     */
+    public function setCategory(?Category $category): void
     {
         $this->category = $category;
-
-        return $this;
     }
 
 }

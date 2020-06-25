@@ -1,0 +1,117 @@
+<?php
+/**
+ * Event service.
+ */
+
+namespace App\Service;
+
+use App\Entity\Event;
+use App\Repository\EventRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
+/**
+ * Class EventService.
+ */
+class EventService
+{
+    /**
+     * Event repository.
+     *
+     * @var \App\Repository\EventRepository
+     */
+    private $eventRepository;
+
+    /**
+     * Paginator.
+     *
+     * @var \Knp\Component\Pager\PaginatorInterface
+     */
+    private $paginator;
+
+    /**
+     * Category service.
+     *
+     * @var \App\Service\CategoryService
+     */
+    private $categoryService;
+
+    /**
+     * EventService constructor.
+     *
+     * @param \App\Repository\EventRepository      $eventRepository Event repository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator          Paginator
+     * @param \App\Service\CategoryService            $categoryService Category service
+     */
+    public function __construct(EventRepository $eventRepository, PaginatorInterface $paginator, CategoryService $categoryService)
+    {
+        $this->eventRepository = $eventRepository;
+        $this->paginator = $paginator;
+        $this->categoryService = $categoryService;
+    }
+    /**
+     * Create paginated list.
+     *
+     * @param int $page Page number
+     * @param array $filters Filters array
+     *
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface Paginated list
+     */
+
+    public function createPaginatedList(int $page, array $filters = []): PaginationInterface
+    {
+        $filters = $this->prepareFilters($filters);
+
+        return $this->paginator->paginate(
+            $this->eventRepository->queryAll($filters),
+            $page,
+            EventRepository::PAGINATOR_ITEMS_PER_PAGE
+        );
+    }
+    /**
+     * Save event.
+     *
+     * @param \App\Entity\Event $event Event entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Event $event): void
+    {
+        $this->eventRepository->save($event);
+    }
+
+    /**
+     * Delete event.
+     *
+     * @param \App\Entity\Event $event Event entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Event $event): void
+    {
+        $this->eventRepository->delete($event);
+    }
+    /**
+     * Prepare filters for the tasks list.
+     *
+     * @param array $filters Raw filters from request
+     *
+     * @return array Result array of filters
+     */
+    private function prepareFilters(array $filters): array
+    {
+        $resultFilters = [];
+        if (isset($filters['category']) && is_numeric($filters['category'])) {
+            $category = $this->categoryService->findOneById(
+                $filters['category']
+            );
+            if (null !== $category) {
+                $resultFilters['category'] = $category;
+            }
+        }
+
+        return $resultFilters;
+    }
+}

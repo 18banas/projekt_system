@@ -1,11 +1,11 @@
 <?php
-
-/**
+/*
  * Event repository.
  */
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -45,14 +45,41 @@ class EventRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param array $filters Filters array
+     *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(array $filters = []): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
-            ->select('event', 'category')
+        $queryBuilder = $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial event.{id, datetime, title}',
+                'partial category.{id, title}'
+            )
             ->join('event.category', 'category')
             ->orderBy('event.updatedAt', 'DESC');
+
+        $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param array                      $filters      Filters array
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['category']) && $filters['category'] instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters['category']);
+        }
+
+        return $queryBuilder;
     }
 
     /**

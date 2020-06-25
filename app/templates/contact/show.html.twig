@@ -5,20 +5,30 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_contact_details'|trans({'%id%': contact.id|default('')}) }}</h1>
+    <h1>{{ 'title_contact_details'|trans({'%id%': contact.id|default('')}) }}</h1><br>
     {% if contact is defined and contact|length %}
-        <dl class="dl-horizontal">
-            <dt>{{ 'label_name'|trans }}</dt>
-            <dd>{{  contact.name }}</dd>
-            <dt>{{ 'label_surname'|trans }}</dt>
-            <dd>{{ contact.surname }}</dd>
-            <dt>{{ 'label_email'|trans }}</dt>
-            <dd>{{  contact.email }}</dd>
-            <dt>{{ 'label_phone_num'|trans }}</dt>
-            <dd>{{  contact.phonenum }}</dd>
-        </dl>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>{{ 'label_name'|trans }}</th>
+                <td>{{  contact.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label_surname'|trans }}</th>
+                <td>{{ contact.surname }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label_email'|trans }}</th>
+                <td>{{  contact.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'label_phone_num'|trans }}</th>
+                <td>{{ contact.phonenum }}</td>
+            </tr>
+            </tbody>
+        </table>
         <p>
-            <a href="{{ url('contact_index') }}" title="{{ 'action_back_to_list'|trans }}">
+            <a class="btn btn-primary" href="{{ url('contact_index') }}" title="{{ 'action_back_to_list'|trans }}">
                 {{ 'action_back_to_list'|trans }}
             </a>
         </p>

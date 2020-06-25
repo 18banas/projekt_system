@@ -1,4 +1,7 @@
 <?php
+/**
+ * User Repository.
+ */
 
 namespace App\Repository;
 
@@ -10,6 +13,8 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * Class UserRepository.
+ *
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
  * @method User|null findOneBy(array $criteria, array $orderBy = null)
  * @method User[]    findAll()
@@ -17,13 +22,21 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * UserRepository constructor.
+     *
+     * @param string $entityClass The class name of the entity this repository manages
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
     /**
+     * Upgrade password.
+     *
      * Used to upgrade (rehash) the user's password automatically over time.
+     * @throws \Doctrine\ORM\ORMException
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {

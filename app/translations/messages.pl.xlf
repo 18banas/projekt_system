@@ -118,14 +118,6 @@
                 <source>message_updated_successfully</source>
                 <target>Zaktualizowano pomyślnie!</target>
             </trans-unit>
-            <trans-unit id="message.deleted_successfully">
-                <source>message.deleted_successfully</source>
-                <target>Usunięto pomyślnie!</target>
-            </trans-unit>
-            <trans-unit id="message.empty_list">
-                <source>message.empty_list</source>
-                <target>Lista jest pusta.</target>
-            </trans-unit>
             <trans-unit id="message_form_error">
                 <source>message_form_error</source>
                 <target>Błąd formularza.</target>
@@ -205,6 +197,54 @@
             <trans-unit id="Day">
                 <source>Day</source>
                 <target>Dzień</target>
+            </trans-unit>
+            <trans-unit id="title_userData_list">
+                <source>title_userData_list</source>
+                <target>Dane użytkownika</target>
+            </trans-unit>
+            <trans-unit id="title_userData_edit">
+                <source>title_userData_edit</source>
+                <target>Edytuj dane użytkownika</target>
+            </trans-unit>
+            <trans-unit id="label_phone">
+                <source>label_phone</source>
+                <target>Numer telefonu</target>
+            </trans-unit>
+            <trans-unit id="action_go_to_userData_list">
+                <source>action_go_to_userData_list</source>
+                <target>Dane użytkownika</target>
+            </trans-unit>
+            <trans-unit id="label_none">
+                <source>label_none</source>
+                <target>Wybierz kategorię</target>
+            </trans-unit>
+            <trans-unit id="message_deleted_successfully">
+                <source>message_deleted_successfully</source>
+                <target>Usunięto pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="title_contact_details">
+                <source>title_contact_details</source>
+                <target>Szczegóły kontaktu</target>
+            </trans-unit>
+            <trans-unit id="action_login">
+                <source>action_login</source>
+                <target>Zaloguj się!</target>
+            </trans-unit>
+            <trans-unit id="title_login">
+                <source>title_login</source>
+                <target>Zaloguj się!</target>
+            </trans-unit>
+            <trans-unit id="login">
+                <source>login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="password">
+                <source>password</source>
+                <target>Hasło</target>
+            </trans-unit>
+            <trans-unit id="message_category_contains_events">
+                <source>message_category_contains_events</source>
+                <target>Kategoria zawiera wydarzenia!</target>
             </trans-unit>
         </body>
     </file>

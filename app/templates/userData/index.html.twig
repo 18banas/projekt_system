@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title_contact_list'|trans }}
+    {{ 'title_userData_list'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -13,10 +13,10 @@
         <a class="nav-link" href="{{ url('category_index') }}" title="{{ 'action_go_to_category_list'|trans }}">
             {{ 'action_go_to_category_list'|trans }}
         </a>
-        <a class="nav-link active" href="{{ url('contact_index') }}" title="{{ 'action_go_to_contact_list'|trans }}">
+        <a class="nav-link" href="{{ url('contact_index') }}" title="{{ 'action_go_to_contact_list'|trans }}">
             {{ 'action_go_to_contact_list'|trans }}
         </a>
-        <a class="nav-link" href="{{ url('userData_index') }}" title="{{ 'action_go_to_userData_list'|trans }}">
+        <a class="nav-link active" href="{{ url('userData_index') }}" title="{{ 'action_go_to_userData_list'|trans }}">
             {{ 'action_go_to_userData_list'|trans }}
         </a>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
@@ -25,38 +25,32 @@
             </div>
         {% endif %}
     </nav><br>
-    <div class="d-flex">
-        <div class="mr-auto p-2 navigation text-center">
-            {% if pagination is defined and pagination.items|length %}
-                {{ knp_pagination_render(pagination) }}
+    {% if pagination is defined and pagination.items|length %}
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
         </div>
-        <a class="mb-auto p-2 btn btn-primary btn-lg bg-success text-white" href="{{ url('contact_create')}}" title="{{ 'action_create_contact'|trans }}">
-            {{ 'action_create_contact'|trans }}
-        </a>
-    </div>
 
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'contact.name') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'label_surname'|trans, 'contact.surname') }}</th>
+                    <th>{{ 'label_name'|trans }}</th>
+                    <th>{{ 'label_surname'|trans }}</th>
+                    <th>{{ 'label_email'|trans }}</th>
+                    <th>{{ 'label_phone_num'|trans }}</th>
                     <th>{{ 'label_actions'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
-                {% for contact in pagination.items %}
+                {% for userData in pagination.items %}
                     <tr>
-                        <td>{{ contact.name }}</td>
-                        <td>{{ contact.surname }}</td>
+                        <td>{{ userData.name }}</td>
+                        <td>{{ userData.surname }}</td>
+                        <td>{{ userData.email }}</td>
+                        <td>{{ userData.phone }}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ url('contact_show', {id: contact.id}) }}" title="{{ 'action_view'|trans }}">
-                                {{ 'action_view'|trans }}
-                            </a>
-                            <a class="btn btn-warning" href="{{ url('contact_edit', {id: contact.id}) }}" title="{{ 'action_edit'|trans }}">
+                            <a class="btn btn-warning" href="{{ url('userData_edit', {id: userData.id}) }}" title="{{ 'action_edit'|trans }}">
                                 {{ 'action_edit'|trans }}
-                            </a>
-                            <a class="btn btn-danger" href="{{ url('contact_delete', {id: contact.id}) }}" title="{{ 'action_delete'|trans }}">
-                                {{ 'action_delete'|trans }}
                             </a>
                         </td>
                     </tr>

@@ -5,37 +5,62 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_category_list'|trans }}</h1>
-    {% if pagination is defined and pagination.items|length %}
-
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
+    <br>
+    <nav class="nav nav-pills nav-justified h5">
+        <a class="nav-link" href="{{ url('event_index') }}" title="{{ 'action_back_to_event_list'|trans }}">
+            {{ 'action_back_to_event_list'|trans }}
+        </a>
+        <a class="nav-link active" href="{{ url('category_index') }}" title="{{ 'action_go_to_category_list'|trans }}">
+            {{ 'action_go_to_category_list'|trans }}
+        </a>
+        <a class="nav-link" href="{{ url('contact_index') }}" title="{{ 'action_go_to_contact_list'|trans }}">
+            {{ 'action_go_to_contact_list'|trans }}
+        </a>
+        <a class="nav-link" href="{{ url('userData_index') }}" title="{{ 'action_go_to_userData_list'|trans }}">
+            {{ 'action_go_to_userData_list'|trans }}
+        </a>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div class="navbar-nav ml-auto">
+                <a class="btn btn-outline-primary"  href="{{ url('app_logout') }}" role="button">{{ 'action_logout'|trans }}</a>
+            </div>
+        {% endif %}
+    </nav><br>
+    <div class="d-flex">
+        <div class="mr-auto p-2 navigation text-center">
+            {% if pagination is defined and pagination.items|length %}
+                {{ knp_pagination_render(pagination) }}
         </div>
+        <a class="mb-auto p-2 btn btn-primary btn-lg bg-success text-white" href="{{ url('category_create')}}" title="{{ 'action_create_category'|trans }}">
+            {{ 'action_create_category'|trans }}
+        </a>
+    </div>
 
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'category.title') }}</th>
-                <th>{{ 'label_actions'|trans }}</th>
-            </tr>
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'category.title') }}</th>
+                    <th>{{ 'label_actions'|trans }}</th>
+                </tr>
             </thead>
             <tbody>
-            {% for category in pagination.items %}
-                <tr>
-                    <td>{{ category.title }}</td>
-                    <td>
-                        <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_view'|trans }}">
-                            {{ 'action_view'|trans }}
-                        </a>
-                        <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action_edit'|trans }}">
-                            {{ 'action_edit'|trans }}
-                        </a>
-                        <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action_delete'|trans }}">
-                                {{ 'action_delete'|trans }}
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for category in pagination.items %}
+                    <tr>
+                        <td>{{ category.title }}</td>
+                        <td>
+                            <a class="btn btn-info" href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_view'|trans }}">
+                                {{ 'action_view'|trans }}
+                            </a>
+                            <a class="btn btn-warning" href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action_edit'|trans }}">
+                                {{ 'action_edit'|trans }}
+                            </a>
+                            {% if not category.events|length %}
+                                <a class="btn btn-danger" href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action_delete'|trans }}">
+                                    {{ 'action_delete'|trans }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 
@@ -46,15 +71,7 @@
     {% else %}
         {% include 'default/_single_flash_message.html.twig' with {
             type: 'warning',
-            message: 'message.empty_list'|trans
+            message: 'message_empty_list'|trans
         } %}
     {% endif %}
-    <p>
-        <a href="{{ url('category_create') }}" title="{{ 'action_create_category'|trans }}">
-            {{ 'action_create_category'|trans }}
-        </a><br>
-        <a href="{{ url('event_index') }}" title="{{ 'action_back_to_event_list'|trans }}">
-            {{ 'action_back_to_event_list'|trans }}
-        </a>
-    </p>
 {% endblock %}

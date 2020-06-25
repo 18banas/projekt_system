@@ -6,13 +6,15 @@
 namespace App\Form;
 
 use App\Entity\Event;
-use Doctrine\DBAL\Types\DateTimeType;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 /**
  * Class EventType.
@@ -42,6 +44,19 @@ class EventType extends AbstractType
             ]
         );
         $builder->add(
+            'category',
+            EntityType::class,
+            [
+                'class' => Category::class,
+                'choice_label' => function ($category) {
+                    return $category->getTitle();
+                },
+                'label' => 'label_category',
+                'placeholder' => 'label_none',
+                'required' => true,
+            ]
+        );
+        $builder->add(
             'datetime',
             DateType::class,
             [
@@ -54,6 +69,7 @@ class EventType extends AbstractType
             TextareaType::class,
             [
                 'label' => 'label_note',
+                'required' => false,
                 'attr' => ['max_length' => 1024],
             ]
         );

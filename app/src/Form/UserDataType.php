@@ -1,20 +1,20 @@
 <?php
 /**
- * Contact type.
+ * UserData type.
  */
 
 namespace App\Form;
 
-use App\Entity\Contact;
+use App\Entity\UserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ContactType.
+ * Class UserDataType.
  */
-class ContactType extends AbstractType
+class UserDataType extends AbstractType
 {
     /**
      * Builds the form.
@@ -48,10 +48,10 @@ class ContactType extends AbstractType
             ]
         );
         $builder->add(
-            'phonenum',
+            'phone',
             TextType::class,
             [
-                'label' => 'label_phone_num',
+                'label' => 'label_phone',
                 'required' => false,
             ]
         );
@@ -72,7 +72,7 @@ class ContactType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Contact::class]);
+        $resolver->setDefaults(['data_class' => UserData::class]);
     }
 
     /**
@@ -85,6 +85,6 @@ class ContactType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'contact';
+        return 'userData';
     }
 }

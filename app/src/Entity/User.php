@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * Class User.
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(
  *     name="users",
@@ -175,6 +177,8 @@ class User implements UserInterface
     }
 
     /**
+     * Getter for Salt.
+     *
      * @see UserInterface
      */
     public function getSalt()

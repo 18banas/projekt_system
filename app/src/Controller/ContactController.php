@@ -7,8 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
-use App\Repository\ContactRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\ContactService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +20,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ContactController extends AbstractController
 {
-    // ...
+    /**
+     * Contact service.
+     *
+     * @var \App\Service\ContactService
+     */
+    private $contactService;
+
+    /**
+     * ContactController constructor.
+     *
+     * @param \App\Service\ContactService $contactService Contact service
+     */
+    public function __construct(ContactService $contactService)
+    {
+        $this->contactService = $contactService;
+    }
+
     /**
      * Index action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\ContactRepository            $contactRepository Contact repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -37,13 +50,10 @@ class ContactController extends AbstractController
      *     name="contact_index",
      * )
      */
-    public function index(Request $request, ContactRepository $contactRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $contactRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            ContactRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->contactService->createPaginatedList($page);
 
         return $this->render(
             'contact/index.html.twig',
@@ -77,7 +87,6 @@ class ContactController extends AbstractController
      * Create action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Repository\ContactRepository        $contactRepository Contact repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -90,15 +99,14 @@ class ContactController extends AbstractController
      *     name="contact_create",
      * )
      */
-    public function create(Request $request, ContactRepository $contactRepository): Response
+    public function create(Request $request): Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $contactRepository->save($contact);
-
+            $this->contactService->save($contact);
             $this->addFlash('success', 'message_created_successfully');
 
             return $this->redirectToRoute('contact_index');
@@ -115,7 +123,6 @@ class ContactController extends AbstractController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
      * @param \App\Entity\Contact                      $contact           Contact entity
-     * @param \App\Repository\ContactRepository        $contactRepository Contact repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -129,14 +136,13 @@ class ContactController extends AbstractController
      *     name="contact_edit",
      * )
      */
-    public function edit(Request $request, Contact $contact, ContactRepository $contactRepository): Response
+    public function edit(Request $request, Contact $contact): Response
     {
         $form = $this->createForm(ContactType::class, $contact, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $contactRepository->save($contact);
-
+            $this->contactService->save($contact);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('contact_index');
@@ -155,7 +161,6 @@ class ContactController extends AbstractController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
      * @param \App\Entity\Contact                      $contact           Contact entity
-     * @param \App\Repository\ContactRepository        $contactRepository Contact repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -169,7 +174,7 @@ class ContactController extends AbstractController
      *     name="contact_delete",
      * )
      */
-    public function delete(Request $request, Contact $contact, ContactRepository $contactRepository): Response
+    public function delete(Request $request, Contact $contact): Response
     {
         $form = $this->createForm(ContactType::class, $contact, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -179,8 +184,8 @@ class ContactController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $contactRepository->delete($contact);
-            $this->addFlash('success', 'message.deleted_successfully');
+            $this->contactService->delete($contact);
+            $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('contact_index');
         }

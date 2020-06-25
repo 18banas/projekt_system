@@ -1,6 +1,6 @@
 <?php
 /**
- * Category fixture.
+ * Category fixtures.
  */
 
 namespace App\DataFixtures;

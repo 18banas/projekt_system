@@ -42,20 +42,6 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Save record.
-     *
-     * @param \App\Entity\Category $category Category entity
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function save(Category $category): void
-    {
-        $this->_em->persist($category);
-        $this->_em->flush($category);
-    }
-
-    /**
      * Query all records.
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder
@@ -63,6 +49,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
+            ->select('category')
             ->orderBy('category.updatedAt', 'DESC');
     }
 
@@ -76,6 +63,20 @@ class CategoryRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('category');
+    }
+
+    /**
+     * Save record.
+     *
+     * @param \App\Entity\Category $category Category entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Category $category): void
+    {
+        $this->_em->persist($category);
+        $this->_em->flush($category);
     }
 
     /**

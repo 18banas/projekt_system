@@ -7,8 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Form\EventType;
-use App\Repository\EventRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\EventService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +20,27 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventController extends AbstractController
 {
-    // ...
+    /**
+     * Event service.
+     *
+     * @var \App\Service\EventService
+     */
+    private $eventService;
+
+    /**
+     * EventController constructor.
+     *
+     * @param \App\Service\EventService $eventService Event service
+     */
+    public function __construct(EventService $eventService)
+    {
+        $this->eventService = $eventService;
+    }
+
     /**
      * Index action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
-     * @param \App\Repository\EventRepository            $eventRepository Event repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator      Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -37,12 +50,11 @@ class EventController extends AbstractController
      *     name="event_index",
      * )
      */
-    public function index(Request $request, EventRepository $eventRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $eventRepository->queryAll(),
+        $pagination = $this->eventService->createPaginatedList(
             $request->query->getInt('page', 1),
-            EventRepository::PAGINATOR_ITEMS_PER_PAGE
+            $request->query->getAlnum('filters', [])
         );
 
         return $this->render(
@@ -76,8 +88,7 @@ class EventController extends AbstractController
     /**
      * Create action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Repository\EventRepository        $eventRepository Event repository
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -90,15 +101,14 @@ class EventController extends AbstractController
      *     name="event_create",
      * )
      */
-    public function create(Request $request, EventRepository $eventRepository): Response
+    public function create(Request $request): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->save($event);
-
+            $this->eventService->save($event);
             $this->addFlash('success', 'message_created_successfully');
 
             return $this->redirectToRoute('event_index');
@@ -114,8 +124,7 @@ class EventController extends AbstractController
      * Edit action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Entity\Event                      $event           Event entity
-     * @param \App\Repository\EventRepository        $eventRepository Event repository
+     * @param \App\Entity\Event                         $event             Event entity
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -129,14 +138,13 @@ class EventController extends AbstractController
      *     name="event_edit",
      * )
      */
-    public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
+    public function edit(Request $request, Event $event): Response
     {
         $form = $this->createForm(EventType::class, $event, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->save($event);
-
+            $this->eventService->save($event);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('event_index');
@@ -150,12 +158,12 @@ class EventController extends AbstractController
             ]
         );
     }
+
     /**
      * Delete action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
      * @param \App\Entity\Event                      $event           Event entity
-     * @param \App\Repository\EventRepository        $eventRepository Event repository
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -169,7 +177,7 @@ class EventController extends AbstractController
      *     name="event_delete",
      * )
      */
-    public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
+    public function delete(Request $request, Event $event): Response
     {
         $form = $this->createForm(EventType::class, $event, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -179,8 +187,8 @@ class EventController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->delete($event);
-            $this->addFlash('success', 'message.deleted_successfully');
+            $this->eventService->delete($event);
+            $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('event_index');
         }
