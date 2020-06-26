@@ -2,6 +2,7 @@
 /**
  * UserData fixtures.
  */
+
 namespace App\DataFixtures;
 
 use App\Entity\UserData;
@@ -11,13 +12,12 @@ use Doctrine\Persistence\ObjectManager;
 /**
  * Class UserDataFixtures.
  */
-
 class UserDataFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
-     * Load data
+     * Load data.
      *
-     * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
+     * @param ObjectManager $manager Persistence object manager
      */
     public function loadData(ObjectManager $manager): void
     {
@@ -33,6 +33,7 @@ class UserDataFixtures extends AbstractBaseFixtures implements DependentFixtureI
 
         $manager->flush();
     }
+
     /**
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.

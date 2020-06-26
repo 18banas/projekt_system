@@ -77,6 +77,7 @@ class Event
      * Note.
      *
      * @var string
+     *
      * @ORM\Column(
      *     type="string",
      *     length=1024,
@@ -87,7 +88,7 @@ class Event
     /**
      * Category.
      *
-     * @var \App\Entity\Category Category
+     * @var Category Category
      *
      * @ORM\ManyToOne(
      *     targetEntity=Category::class,
@@ -95,7 +96,6 @@ class Event
      * )
      *
      * @ORM\JoinColumn(nullable=false)
-     *
      */
     private $category;
 
@@ -106,7 +106,6 @@ class Event
     {
         $this->tags = new ArrayCollection();
     }
-
 
     /**
      * Getter for Id.
@@ -121,9 +120,9 @@ class Event
     /**
      * Getter for Created At.
      *
-     * @return \DateTimeInterface|null Created at
+     * @return DateTimeInterface|null Created at
      */
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -131,7 +130,7 @@ class Event
     /**
      * Setter for Created at.
      *
-     * @param \DateTimeInterface $createdAt Created at
+     * @param DateTimeInterface $createdAt Created at
      */
     public function setCreatedAt(DateTimeInterface $createdAt): void
     {
@@ -141,7 +140,7 @@ class Event
     /**
      * Getter for Updated at.
      *
-     * @return \DateTimeInterface|null Updated at
+     * @return DateTimeInterface|null Updated at
      */
     public function getUpdatedAt(): ?DateTimeInterface
     {
@@ -151,7 +150,7 @@ class Event
     /**
      * Setter for Updated at.
      *
-     * @param \DateTimeInterface $updatedAt Updated at
+     * @param DateTimeInterface $updatedAt Updated at
      */
     public function setUpdatedAt(DateTimeInterface $updatedAt): void
     {
@@ -181,7 +180,7 @@ class Event
     /**
      * Getter for Date_time.
      *
-     * @return \DateTimeInterface|null Date_time
+     * @return DateTimeInterface|null Date_time
      */
     public function getDatetime(): ?DateTimeInterface
     {
@@ -191,7 +190,7 @@ class Event
     /**
      * Setter for Date_time.
      *
-     * @param \DateTimeInterface $datetime Date_time
+     * @param DateTimeInterface $datetime Date_time
      */
     public function setDatetime(DateTimeInterface $datetime): void
     {
@@ -221,7 +220,7 @@ class Event
     /**
      * Getter for category.
      *
-     * @return \App\Entity\Category|null Category
+     * @return Category|null Category
      */
     public function getCategory(): ?Category
     {
@@ -231,11 +230,10 @@ class Event
     /**
      * Setter for category.
      *
-     * @param \App\Entity\Category|null $category Category
+     * @param Category|null $category Category
      */
     public function setCategory(?Category $category): void
     {
         $this->category = $category;
     }
-
 }

@@ -6,20 +6,19 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 
 /**
- * Class AppFixtures
+ * Class AppFixtures.
  */
-
 class AppFixtures extends Fixture
 {
     /**
-     * Load data
+     * Load data.
      *
-     * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
+     * @param ObjectManager $manager Persistence object manager
      */
-
-    public function load(\Doctrine\Persistence\ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         // $product = new Product();
         // $manager->persist($product);

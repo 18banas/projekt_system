@@ -7,6 +7,8 @@ namespace App\Service;
 
 use App\Entity\Event;
 use App\Repository\EventRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -18,30 +20,30 @@ class EventService
     /**
      * Event repository.
      *
-     * @var \App\Repository\EventRepository
+     * @var EventRepository
      */
     private $eventRepository;
 
     /**
      * Paginator.
      *
-     * @var \Knp\Component\Pager\PaginatorInterface
+     * @var PaginatorInterface
      */
     private $paginator;
 
     /**
      * Category service.
      *
-     * @var \App\Service\CategoryService
+     * @var CategoryService
      */
     private $categoryService;
 
     /**
      * EventService constructor.
      *
-     * @param \App\Repository\EventRepository      $eventRepository Event repository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator          Paginator
-     * @param \App\Service\CategoryService            $categoryService Category service
+     * @param EventRepository    $eventRepository Event repository
+     * @param PaginatorInterface $paginator       Paginator
+     * @param CategoryService    $categoryService Category service
      */
     public function __construct(EventRepository $eventRepository, PaginatorInterface $paginator, CategoryService $categoryService)
     {
@@ -49,15 +51,15 @@ class EventService
         $this->paginator = $paginator;
         $this->categoryService = $categoryService;
     }
+
     /**
      * Create paginated list.
      *
-     * @param int $page Page number
+     * @param int   $page    Page number
      * @param array $filters Filters array
      *
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface Paginated list
+     * @return PaginationInterface Paginated list
      */
-
     public function createPaginatedList(int $page, array $filters = []): PaginationInterface
     {
         $filters = $this->prepareFilters($filters);
@@ -68,13 +70,14 @@ class EventService
             EventRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
+
     /**
      * Save event.
      *
-     * @param \App\Entity\Event $event Event entity
+     * @param Event $event Event entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(Event $event): void
     {
@@ -84,15 +87,16 @@ class EventService
     /**
      * Delete event.
      *
-     * @param \App\Entity\Event $event Event entity
+     * @param Event $event Event entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Event $event): void
     {
         $this->eventRepository->delete($event);
     }
+
     /**
      * Prepare filters for the tasks list.
      *

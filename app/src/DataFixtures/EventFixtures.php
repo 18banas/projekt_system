@@ -15,9 +15,9 @@ use Doctrine\Persistence\ObjectManager;
 class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
-     * Load data
+     * Load data.
      *
-     * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
+     * @param ObjectManager $manager Persistence object manager
      */
     public function loadData(ObjectManager $manager): void
     {
@@ -35,6 +35,7 @@ class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInte
 
         $manager->flush();
     }
+
     /**
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.
@@ -46,4 +47,3 @@ class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInte
         return [CategoryFixtures::class];
     }
 }
-

@@ -73,7 +73,7 @@ class Category
      * @Assert\Type(type="string")
      * @Assert\NotBlank
      * @Assert\Length(
-     *     min="3",
+     *     min="1",
      *     max="64",
      * )
      */
@@ -82,7 +82,7 @@ class Category
     /**
      * Events.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Event[] $event Events
+     * @var ArrayCollection|Event[] Events
      *
      * @ORM\OneToMany(
      *     targetEntity=Event::class,
@@ -103,7 +103,7 @@ class Category
      *
      * @Assert\Type(type="string")
      * @Assert\Length(
-     *     min="3",
+     *     min="1",
      *     max="64",
      * )
      *
@@ -132,7 +132,7 @@ class Category
     /**
      * Getter for Created At.
      *
-     * @return \DateTimeInterface|null Created at
+     * @return DateTimeInterface|null Created at
      */
     public function getCreatedAt(): ?DateTimeInterface
     {
@@ -142,7 +142,7 @@ class Category
     /**
      * Setter for Created at.
      *
-     * @param \DateTimeInterface $createdAt Created at
+     * @param DateTimeInterface $createdAt Created at
      */
     public function setCreatedAt(DateTimeInterface $createdAt): void
     {
@@ -152,7 +152,7 @@ class Category
     /**
      * Getter for Updated at.
      *
-     * @return \DateTimeInterface|null Updated at
+     * @return DateTimeInterface|null Updated at
      */
     public function getUpdatedAt(): ?DateTimeInterface
     {
@@ -162,7 +162,7 @@ class Category
     /**
      * Setter for Updated at.
      *
-     * @param \DateTimeInterface $updatedAt Updated at
+     * @param DateTimeInterface $updatedAt Updated at
      */
     public function setUpdatedAt(DateTimeInterface $updatedAt): void
     {
@@ -217,42 +217,5 @@ class Category
     public function getEvents(): Collection
     {
         return $this->events;
-    }
-
-    /**
-     * AddEvent action.
-     *
-     * @param Event $event
-     *
-     * @return $this
-     */
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events[] = $event;
-            $event->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * RemoveEvent action.
-     *
-     * @param Event $event
-     *
-     * @return $this
-     */
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->contains($event)) {
-            $this->events->removeElement($event);
-            // set the owning side to null (unless already changed)
-            if ($event->getCategory() === $this) {
-                $event->setCategory(null);
-            }
-        }
-
-        return $this;
     }
 }

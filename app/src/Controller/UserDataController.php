@@ -8,6 +8,8 @@ namespace App\Controller;
 use App\Entity\UserData;
 use App\Form\UserDataType;
 use App\Service\UserDataService;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +25,14 @@ class UserDataController extends AbstractController
     /**
      * UserData service.
      *
-     * @var \App\Service\UserDataService
+     * @var UserDataService
      */
     private $userDataService;
 
     /**
      * UserDataController constructor.
      *
-     * @param \App\Service\UserDataService $userDataService UserData service
+     * @param UserDataService $userDataService UserData service
      */
     public function __construct(UserDataService $userDataService)
     {
@@ -40,9 +42,9 @@ class UserDataController extends AbstractController
     /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request        HTTP request
+     * @param Request $request HTTP request
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
      * @Route(
      *     "/",
@@ -64,13 +66,13 @@ class UserDataController extends AbstractController
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Entity\UserData                      $userData           UserData entity
+     * @param Request  $request  HTTP request
+     * @param UserData $userData UserData entity
      *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
+     * @return Response HTTP response
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      *
      * @Route(
      *     "/{id}/edit",

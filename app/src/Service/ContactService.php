@@ -7,6 +7,8 @@ namespace App\Service;
 
 use App\Entity\Contact;
 use App\Repository\ContactRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -18,36 +20,36 @@ class ContactService
     /**
      * Contact repository.
      *
-     * @var \App\Repository\ContactRepository
+     * @var ContactRepository
      */
     private $contactRepository;
 
     /**
      * Paginator.
      *
-     * @var \Knp\Component\Pager\PaginatorInterface
+     * @var PaginatorInterface
      */
     private $paginator;
 
     /**
      * ContactService constructor.
      *
-     * @param \App\Repository\ContactRepository      $contactRepository Contact repository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator          Paginator
+     * @param ContactRepository  $contactRepository Contact repository
+     * @param PaginatorInterface $paginator         Paginator
      */
     public function __construct(ContactRepository $contactRepository, PaginatorInterface $paginator)
     {
         $this->contactRepository = $contactRepository;
         $this->paginator = $paginator;
     }
+
     /**
      * Create paginated list.
      *
      * @param int $page Page number
      *
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface Paginated list
+     * @return PaginationInterface Paginated list
      */
-
     public function createPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -60,10 +62,10 @@ class ContactService
     /**
      * Save contact.
      *
-     * @param \App\Entity\Contact $contact Contact entity
+     * @param Contact $contact Contact entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(Contact $contact): void
     {
@@ -73,14 +75,13 @@ class ContactService
     /**
      * Delete contact.
      *
-     * @param \App\Entity\Contact $contact Contact entity
+     * @param Contact $contact Contact entity
      *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function delete(Contact $contact): void
     {
         $this->contactRepository->delete($contact);
     }
-
 }

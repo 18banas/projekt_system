@@ -9,6 +9,8 @@ use App\Entity\Category;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -35,7 +37,7 @@ class EventRepository extends ServiceEntityRepository
     /**
      * EventRepository constructor.
      *
-     * @param \Doctrine\Common\Persistence\ManagerRegistry $registry Manager registry
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -47,7 +49,7 @@ class EventRepository extends ServiceEntityRepository
      *
      * @param array $filters Filters array
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder Query builder
      */
     public function queryAll(array $filters = []): QueryBuilder
     {
@@ -65,12 +67,40 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * Save record.
+     *
+     * @param Event $event Event entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(Event $event): void
+    {
+        $this->_em->persist($event);
+        $this->_em->flush($event);
+    }
+
+    /**
+     * Delete record.
+     *
+     * @param Event $event Event entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(Event $event): void
+    {
+        $this->_em->remove($event);
+        $this->_em->flush($event);
+    }
+
+    /**
      * Apply filters to paginated list.
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
-     * @param array                      $filters      Filters array
+     * @param QueryBuilder $queryBuilder Query builder
+     * @param array        $filters      Filters array
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder Query builder
      */
     private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
     {
@@ -85,42 +115,12 @@ class EventRepository extends ServiceEntityRepository
     /**
      * Get or create new query builder.
      *
-     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder Query builder
+     * @param QueryBuilder|null $queryBuilder Query builder
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder Query builder
      */
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('event');
     }
-
-    /**
-     * Save record.
-     *
-     * @param \App\Entity\Event $event Event entity
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function save(Event $event): void
-    {
-        $this->_em->persist($event);
-        $this->_em->flush($event);
-    }
-
-    /**
-     * Delete record.
-     *
-     * @param \App\Entity\Event $event Event entity
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
-    public function delete(Event $event): void
-    {
-        $this->_em->remove($event);
-        $this->_em->flush($event);
-    }
 }
-
-
