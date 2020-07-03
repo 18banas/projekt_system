@@ -25,7 +25,7 @@ class UserDataFixtures extends AbstractBaseFixtures implements DependentFixtureI
             $userdata = new UserData();
             $userdata->setName($this->faker->firstName);
             $userdata->setSurname($this->faker->lastName);
-            $userdata->setPhone($this->faker->e164PhoneNumber);
+            $userdata->setPhone($this->faker->ean8);
             $userdata->setEmail($this->faker->email);
 
             return $userdata;

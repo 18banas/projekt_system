@@ -7,6 +7,7 @@ namespace App\Entity;
 
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Contact.
@@ -58,6 +59,8 @@ class Contact
      *     type="string",
      *     length=45,
      *     nullable=true)
+     *
+     * @Assert\Email
      */
     private $email;
 
@@ -70,6 +73,14 @@ class Contact
      *     type="string",
      *     length=45,
      *     nullable=true)
+     *
+     * @Assert\Length(
+     *     min="8",
+     *     max="15",
+     * )
+     *
+     * @Assert\Regex(
+     *     pattern="/^[0-9]*$/")
      */
     private $phonenum;
 

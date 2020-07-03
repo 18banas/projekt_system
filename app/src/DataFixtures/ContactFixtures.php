@@ -25,7 +25,7 @@ class ContactFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $contact = new Contact();
             $contact->setName($this->faker->firstName);
             $contact->setSurname($this->faker->lastName);
-            $contact->setPhoneNum($this->faker->e164PhoneNumber);
+            $contact->setPhoneNum($this->faker->ean8);
             $contact->setEmail($this->faker->email);
 
             return $contact;

@@ -7,6 +7,7 @@ namespace App\Entity;
 
 use App\Repository\UserDataRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class UserData.
@@ -58,6 +59,8 @@ class UserData
      *     type="string",
      *     length=45,
      *     nullable=true)
+     *
+     * @Assert\Email
      */
     private $email;
 
@@ -70,6 +73,14 @@ class UserData
      *     type="string",
      *     length=45,
      *     nullable=true)
+     *
+     * @Assert\Length(
+     *     min="9",
+     *     max="9",
+     * )
+     *
+     * @Assert\Regex(
+     *     pattern="/^[0-9]*$/")
      */
     private $phone;
 

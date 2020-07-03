@@ -60,13 +60,6 @@ abstract class AbstractBaseFixtures extends Fixture
     /**
      * Create many objects at once:.
      *
-     *      $this->createMany(10, function(int $i) {
-     *          $user = new User();
-     *          $user->setFirstName('Ryan');
-     *
-     *           return $user;
-     *      });
-     *
      * @param int      $count     Number of object to create
      * @param string   $groupName Tag these created objects with this group name,
      *                            and use this later with getRandomReference(s)
@@ -83,8 +76,6 @@ abstract class AbstractBaseFixtures extends Fixture
             }
 
             $this->manager->persist($entity);
-
-            // store for usage later as groupName_#COUNT#
             $this->addReference(sprintf('%s_%d', $groupName, $i), $entity);
         }
     }
